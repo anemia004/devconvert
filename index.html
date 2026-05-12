@@ -1,86 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="system">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
-  <title>DevConvert — Binary / Hex / Decimal / Text & Base64</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevConvert</title>
 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- CSS FILE -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="page">
-    <header class="block block--hero">
-      <div class="hero-grid">
-        <div class="hero-text">
-          <h1 class="heading-xl">Convert binary, hex,<br>decimal, and text<br>instantly</h1>
-          <p class="hero-subtitle">UTF-8 safe, BigInt-aware, and worker-powered for large inputs.</p>
-          <span class="hero-punch">Input one format. Get all formats.</span>
-        </div>
+  <h1>DevConvert</h1>
+  <p>Your project is connected successfully.</p>
 
-        <div class="hero-actions">
-          <button class="theme-toggle btn--dark" id="themeToggle" type="button">Theme: Auto</button>
-        </div>
-      </div>
-    </header>
-
-    <main class="block block--converter" id="mainConverter">
-      <div class="input-panel">
-        <div class="chip-group" id="inputFormatChips">
-          <button class="chip chip--active" data-format="binary">Binary</button>
-          <button class="chip" data-format="hex">Hex</button>
-          <button class="chip" data-format="decimal">Decimal</button>
-          <button class="chip" data-format="text">Text</button>
-        </div>
-
-        <textarea class="input-textarea" id="inputTextarea"></textarea>
-
-        <div class="btn-row">
-          <button class="btn" id="btnPaste">Paste</button>
-          <button class="btn" id="btnClear">Clear</button>
-        </div>
-
-        <span id="inputStatus" class="status-msg">Ready</span>
-      </div>
-
-      <div class="output-panel">
-        <div class="chip-group" id="outputFormatChips">
-          <button class="chip chip--active-output" data-format="binary">Binary</button>
-          <button class="chip" data-format="hex">Hex</button>
-          <button class="chip" data-format="decimal">Decimal</button>
-          <button class="chip" data-format="text">Text</button>
-        </div>
-
-        <div id="outputDisplay" class="output-display-box">—</div>
-
-        <div class="btn-row">
-          <button class="btn-copy" data-target="outputDisplay">Copy</button>
-          <span id="outputStatus" class="status-msg">Ready</span>
-        </div>
-      </div>
-    </main>
-
-    <section class="block block--base64">
-      <textarea id="base64Input" class="input-textarea"></textarea>
-
-      <div class="btn-row">
-        <button id="btnBase64Convert" class="btn">Convert</button>
-        <button id="btnBase64Clear" class="btn">Clear</button>
-      </div>
-
-      <div id="base64ResultDisplay" class="output-display-box">—</div>
-      <span id="base64Status" class="status-msg">Ready</span>
-    </section>
-  </div>
-
-  <!-- JS -->
+  <!-- JS FILE -->
   <script src="script.js" defer></script>
 
 </body>

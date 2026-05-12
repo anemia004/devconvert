@@ -1,0 +1,162 @@
+:root {
+  --hot-pink: #ff2d75;
+  --bright-yellow: #ffe600;
+  --cyan: #00e5ff;
+  --cyan-dark: #00b8d4;
+  --ok: #00e676;
+  --warning: #ffb300;
+  --black: #0a0a0a;
+  --cream: #fffef5;
+  --cream-dark: #f5f1e8;
+  --grid-line: rgba(0, 0, 0, 0.04);
+  --border-width: 3px;
+  --border-heavy: 4px;
+  --radius: 0px;
+  --shadow: 6px 6px 0 var(--black);
+  --panel-a: #fff;
+  --panel-b: #e8fdff;
+  --panel-c: #ffe600;
+  --panel-d: #f6f7fb;
+  --text: #0a0a0a;
+  --text-muted: #555;
+  --text-inverse: #fff;
+  --border: #0a0a0a;
+  --focus: #ff2d75;
+}
+
+html[data-theme="dark"] {
+  --cream: #0d1016;
+  --cream-dark: #121721;
+  --grid-line: rgba(255, 255, 255, 0.06);
+  --panel-a: #121721;
+  --panel-b: #0f1820;
+  --panel-c: #212313;
+  --panel-d: #151b26;
+  --text: #f4f7fb;
+  --text-muted: #a7afbd;
+  --text-inverse: #0a0a0a;
+  --border: #f4f7fb;
+  --shadow: 6px 6px 0 rgba(244, 247, 251, 0.9);
+  --focus: #00e5ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+}
+
+/* PAGE */
+.page {
+  max-width: 1160px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* BLOCKS */
+.block {
+  border: var(--border-heavy) solid var(--border);
+  background: var(--panel-a);
+  margin-bottom: 20px;
+}
+
+/* HERO */
+.block--hero {
+  padding: 20px;
+}
+
+/* CONVERTER */
+.block--converter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.input-panel,
+.output-panel {
+  padding: 20px;
+}
+
+.input-panel {
+  background: var(--panel-c);
+  border-right: var(--border-heavy) solid var(--border);
+}
+
+.output-panel {
+  background: var(--panel-b);
+}
+
+/* TEXTAREA */
+.input-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  font-family: monospace;
+}
+
+/* OUTPUT */
+.output-display-box {
+  min-height: 120px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+/* BUTTONS */
+.btn,
+.btn-copy,
+.theme-toggle {
+  border: 2px solid var(--border);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: monospace;
+  background: var(--panel-a);
+}
+
+/* CHIPS */
+.chip {
+  border: 2px solid var(--border);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-family: monospace;
+  background: var(--panel-a);
+}
+
+.chip--active {
+  background: var(--hot-pink);
+  color: white;
+}
+
+.chip--active-output {
+  background: var(--cyan);
+}
+
+/* STATUS */
+.status-msg {
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* BASE64 */
+.block--base64 {
+  padding: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .block--converter {
+    grid-template-columns: 1fr;
+  }
+
+  .input-panel {
+    border-right: none;
+    border-bottom: var(--border-heavy) solid var(--border);
+  }
+}

@@ -4,82 +4,195 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="light dark" />
-
-  <title>DevConvert</title>
-
+  <title>DevConvert — Binary / Hex / Decimal / Text & Base64</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
   <div class="page">
     <header class="block block--hero">
       <div class="hero-grid">
         <div class="hero-text">
-          <h1 class="heading-xl">
-            Convert binary, hex,<br>
-            decimal, and text<br>
-            instantly
-          </h1>
-
-          <p class="hero-subtitle">
-            UTF-8 safe, BigInt-aware, and worker-powered.
-          </p>
-
-          <span class="hero-punch">
-            Input one format. Get all formats.
-          </span>
+          <h1 class="heading-xl">Convert binary, hex,<br>decimal, and text<br>instantly</h1>
+          <p class="hero-subtitle">UTF-8 safe, BigInt-aware, and worker-powered for large inputs.</p>
+          <span class="hero-punch">Input one format. Get all formats.</span>
         </div>
 
-        <button class="theme-toggle btn--dark" id="themeToggle">
-          Theme: Auto
-        </button>
+        <div class="hero-actions">
+          <button class="theme-toggle btn--dark" id="themeToggle" type="button" aria-pressed="false">Theme: Auto</button>
+          <div class="hero-decorations" aria-hidden="true">
+            <div class="pixel-icon" title="Binary digits">
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="8" width="8" height="14" fill="#000"/>
+                <rect x="16" y="8" width="8" height="14" fill="#ff2d75"/>
+                <rect x="6" y="28" width="8" height="12" fill="#000"/>
+                <rect x="16" y="28" width="8" height="12" fill="#000"/>
+                <rect x="28" y="8" width="8" height="14" fill="#ff2d75"/>
+                <rect x="38" y="8" width="6" height="14" fill="#000"/>
+              </svg>
+            </div>
+            <div class="pixel-icon" title="Code brackets">
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="6" width="6" height="36" fill="#000"/>
+                <rect x="10" y="6" width="4" height="6" fill="#000"/>
+                <rect x="10" y="36" width="4" height="6" fill="#000"/>
+                <rect x="38" y="6" width="6" height="36" fill="#000"/>
+                <rect x="34" y="6" width="4" height="6" fill="#000"/>
+                <rect x="34" y="36" width="4" height="6" fill="#000"/>
+                <rect x="18" y="18" width="12" height="4" fill="#00e5ff"/>
+                <rect x="18" y="26" width="12" height="4" fill="#00e5ff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
+      <span class="deco-annotation deco-annotation--br">v3.0 · worker + bigints</span>
     </header>
 
-    <main class="block block--converter">
-
-      <div class="input-panel">
-
-        <div class="chip-group" id="inputFormatChips">
-          <button class="chip chip--active" data-format="binary">Binary</button>
-          <button class="chip" data-format="hex">Hex</button>
-          <button class="chip" data-format="decimal">Decimal</button>
-          <button class="chip" data-format="text">Text</button>
+    <main class="block block--converter" id="mainConverter">
+      <div class="input-panel" id="inputPanel">
+        <div class="panel-label-bar">
+          <span class="label-sm">Input Format</span>
         </div>
 
-        <textarea
-          class="input-textarea"
-          id="inputTextarea"
-          placeholder="Enter value..."
-        ></textarea>
+        <div class="chip-group" id="inputFormatChips" role="tablist" aria-label="Input format">
+          <button class="chip chip--active" data-format="binary" type="button" role="tab" aria-selected="true">Binary</button>
+          <button class="chip" data-format="hex" type="button" role="tab" aria-selected="false">Hexadecimal</button>
+          <button class="chip" data-format="decimal" type="button" role="tab" aria-selected="false">Decimal</button>
+          <button class="chip" data-format="text" type="button" role="tab" aria-selected="false">Text</button>
+        </div>
 
+        <textarea class="input-textarea" id="inputTextarea" placeholder="Paste text or numbers to begin…" rows="5" autocomplete="off" spellcheck="false"></textarea>
+        <div class="textarea-note">Binary / hex / decimal inputs may be space-separated groups. Text is encoded with UTF-8.</div>
+
+        <div class="btn-row">
+          <button class="btn" id="btnPaste" type="button" title="Paste from clipboard">📋 Paste</button>
+          <button class="btn" id="btnClear" type="button" title="Clear input">✕ Clear</button>
+          <button class="btn btn--accent" id="btnSample" type="button" title="Load sample data">⚡ Sample</button>
+        </div>
+
+        <span class="status-msg status-msg--empty" id="inputStatus">Awaiting input</span>
       </div>
 
-      <div class="output-panel">
-
-        <div class="chip-group" id="outputFormatChips">
-          <button class="chip chip--active-output" data-format="binary">Binary</button>
-          <button class="chip" data-format="hex">Hex</button>
-          <button class="chip" data-format="decimal">Decimal</button>
-          <button class="chip" data-format="text">Text</button>
+      <div class="output-panel" id="outputPanel">
+        <div class="panel-label-bar">
+          <span class="label-sm">Output Format</span>
+          <span class="annotation" style="margin-left:auto;">select one</span>
         </div>
 
-        <div class="output-display-box" id="outputDisplay">
-          —
+        <div class="chip-group" id="outputFormatChips" role="tablist" aria-label="Output format">
+          <button class="chip chip--active-output" data-format="binary" type="button" role="tab" aria-selected="true">Binary</button>
+          <button class="chip" data-format="hex" type="button" role="tab" aria-selected="false">Hexadecimal</button>
+          <button class="chip" data-format="decimal" type="button" role="tab" aria-selected="false">Decimal</button>
+          <button class="chip" data-format="text" type="button" role="tab" aria-selected="false">Text</button>
         </div>
 
+        <div class="progress-wrap" aria-label="Conversion progress">
+          <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="output-display-box output-display-box--empty" id="outputDisplay" aria-live="polite">—</div>
+
+        <div class="btn-row copy-line">
+          <button class="btn-copy" data-target="outputDisplay" type="button">Copy Result</button>
+          <span class="status-msg status-msg--empty" id="outputStatus">Ready</span>
+        </div>
       </div>
 
+      <div class="panel-arrow" aria-hidden="true">
+        <svg class="arrow-svg" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="18" width="36" height="16" fill="#000"/>
+          <rect x="36" y="6" width="16" height="12" fill="#ff2d75"/>
+          <rect x="36" y="34" width="16" height="12" fill="#ff2d75"/>
+          <rect x="42" y="10" width="6" height="32" fill="#ff2d75"/>
+        </svg>
+      </div>
     </main>
+
+    <section class="block block--base64" id="base64Section">
+      <span class="base64-section-label">Base64 Decoder / Encoder</span>
+      <div class="base64-inner">
+        <div class="base64-left">
+          <div class="toggle-switch-row">
+            <span class="label-sm">Mode:</span>
+            <div class="toggle-pill" id="base64Toggle" role="tablist" aria-label="Base64 mode">
+              <button class="active-toggle" data-mode="encode" type="button" role="tab" aria-selected="true">Encode</button>
+              <button data-mode="decode" type="button" role="tab" aria-selected="false">Decode</button>
+            </div>
+          </div>
+
+          <textarea class="input-textarea" id="base64Input" placeholder="Enter text to encode to Base64…" rows="4" autocomplete="off" spellcheck="false"></textarea>
+
+          <div class="btn-row">
+            <button class="btn btn--accent" id="btnBase64Convert" type="button">Convert</button>
+            <button class="btn" id="btnBase64Clear" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div class="base64-right">
+          <span class="label-sm">Result</span>
+          <div class="output-display-box output-display-box--empty" id="base64ResultDisplay" aria-live="polite">—</div>
+          <div class="btn-row" style="justify-content: space-between;">
+            <button class="btn-copy" data-target="base64ResultDisplay" type="button">Copy</button>
+            <span class="status-msg status-msg--empty" id="base64Status">Ready</span>
+          </div>
+        </div>
+      </div>
+      <span class="deco-annotation deco-annotation--tl">Base64 stays separate</span>
+    </section>
+
+    <section class="block--features" id="featureBlocks" aria-label="Features">
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="6" width="32" height="28" fill="none" stroke="#000" stroke-width="3"/>
+          <rect x="12" y="14" width="16" height="4" fill="#ff2d75"/>
+          <rect x="12" y="22" width="10" height="4" fill="#000"/>
+        </svg>
+        <span class="feature-label">One-click<br>copy</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="10" width="8" height="20" fill="#ffe600" stroke="#000" stroke-width="2"/>
+          <rect x="14" y="6" width="8" height="28" fill="#00e5ff" stroke="#000" stroke-width="2"/>
+          <rect x="24" y="14" width="8" height="16" fill="#ff2d75" stroke="#000" stroke-width="2"/>
+        </svg>
+        <span class="feature-label">Instant<br>conversion</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="36" height="36" fill="none" stroke="#000" stroke-width="3"/>
+          <rect x="10" y="12" width="8" height="8" fill="#000"/>
+          <rect x="22" y="12" width="8" height="8" fill="#ff2d75"/>
+          <rect x="10" y="24" width="8" height="8" fill="#ff2d75"/>
+          <rect x="22" y="24" width="8" height="8" fill="#000"/>
+        </svg>
+        <span class="feature-label">Error<br>handling</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="8" width="10" height="24" fill="#000"/>
+          <rect x="14" y="4" width="10" height="32" fill="#00e5ff" stroke="#000" stroke-width="2"/>
+          <rect x="26" y="12" width="10" height="20" fill="#ffe600" stroke="#000" stroke-width="2"/>
+        </svg>
+        <span class="feature-label">Unicode<br>safe</span>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="6" width="28" height="28" fill="none" stroke="#000" stroke-width="3"/>
+          <rect x="4" y="14" width="32" height="4" fill="#ff2d75"/>
+          <rect x="18" y="4" width="4" height="32" fill="#000"/>
+        </svg>
+        <span class="feature-label">Fast<br>parsing</span>
+      </div>
+    </section>
   </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>

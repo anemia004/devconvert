@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dev Utility Converter</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
 /* ============================================================
-   TOKENS
+   DESIGN TOKENS
    ============================================================ */
 :root {
   color-scheme: light;
@@ -24,6 +14,7 @@
   --black: #0a0a0a;
   --cream: #fffef5;
   --cream-dark: #f5f1e8;
+
   --grid-line: rgba(0, 0, 0, 0.04);
   --grid-line-fine: rgba(0, 0, 0, 0.015);
 
@@ -43,7 +34,7 @@
   --border: #0a0a0a;
   --focus: #ff2d75;
 
-  /* interactive surfaces — theme aware */
+  /* theme-aware interactive surfaces */
   --hover-tint: rgba(0, 0, 0, 0.05);
   --press-tint: rgba(0, 0, 0, 0.09);
   --scroll-track: rgba(0, 0, 0, 0.08);
@@ -115,7 +106,6 @@ body {
               color var(--dur-med) var(--ease);
 }
 
-/* fine secondary grid — purely decorative */
 body::before {
   content: '';
   position: fixed;
@@ -205,8 +195,8 @@ body[data-reduce-motion="true"] *::after {
   background: var(--panel-a);
 }
 
-/* Feature strip: container supplies the hairlines, cards stay borderless.
-   This gives perfectly uniform 3px dividers in every wrap configuration. */
+/* Feature strip: the container supplies the dividers, cards stay borderless.
+   This keeps every divider exactly 3px in any wrap configuration. */
 .block--features {
   margin-top: 2.5rem;
   z-index: 2;
@@ -698,7 +688,7 @@ html[data-theme="dark"] .btn--dark:hover {
   z-index: 10;
 }
 
-/* right side gets its own accent so the two halves read as a pair */
+/* right side gets its own accent so the pair reads clearly */
 .base64-right .base64-section-label {
   background: var(--cyan);
   color: var(--text-inverse);
@@ -792,7 +782,6 @@ html[data-theme="dark"] .toggle-pill button.active-toggle {
 .feature-card:nth-child(5)::after { background: var(--warning); }
 
 .feature-card:hover::after { height: 4px; }
-
 .feature-card:hover .feature-icon { transform: scale(1.12) rotate(-3deg); }
 
 .feature-icon {
@@ -894,7 +883,7 @@ html[data-theme="dark"] .toggle-pill button.active-toggle {
   border-radius: 2px;
 }
 
-/* keep the inset ring on text fields instead of a double outline */
+/* text fields get an inset ring instead of a double outline */
 .input-textarea:focus-visible {
   outline: none;
   border-color: var(--focus);
@@ -990,113 +979,3 @@ html[data-theme="dark"] .toggle-pill button.active-toggle {
   .status-msg--err,
   .hero-punch { forced-color-adjust: none; }
 }
-</style>
-</head>
-<body>
-
-<div class="page">
-
-  <!-- HERO -->
-  <header class="block block--hero">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <h1 class="heading-xl">Dev Utility<br>Converter</h1>
-        <p class="hero-subtitle">Encode, decode, format. One tool, zero nonsense.</p>
-        <span class="hero-punch">Fast &amp; Offline</span>
-      </div>
-      <div class="hero-decorations">
-        <span class="pixel-icon" aria-hidden="true"></span>
-        <span class="pixel-icon" aria-hidden="true"></span>
-      </div>
-    </div>
-  </header>
-
-  <!-- CONVERTER -->
-  <section class="block block--converter">
-    <div class="panel-arrow" aria-hidden="true">
-      <svg class="arrow-svg" viewBox="0 0 52 52" fill="none">
-        <path d="M4 26h40M30 12l14 14-14 14" stroke="currentColor" stroke-width="4"/>
-      </svg>
-    </div>
-
-    <div class="input-panel">
-      <div class="panel-label-bar">
-        <span class="label-sm">Plain Text</span>
-      </div>
-      <textarea class="input-textarea" placeholder="Type or paste your text here…" spellcheck="false"></textarea>
-      <p class="textarea-note">Everything runs locally in your browser.</p>
-    </div>
-
-    <div class="output-panel">
-      <div class="panel-label-bar">
-        <span class="label-sm">Result</span>
-      </div>
-      <div class="output-display-box output-display-box--empty">Output will appear here…</div>
-      <div class="btn-row">
-        <button class="btn btn--accent" type="button">Convert</button>
-        <button class="btn btn--dark" type="button">Clear</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- BASE64 -->
-  <section class="block block--base64">
-    <div class="base64-inner">
-      <div class="base64-left">
-        <span class="base64-section-label">Encode</span>
-        <textarea class="input-textarea" placeholder="Text to encode…" spellcheck="false"></textarea>
-        <div class="btn-row">
-          <button class="btn btn--accent" type="button">Encode</button>
-          <button class="btn-copy" type="button">Copy</button>
-        </div>
-      </div>
-      <div class="base64-right">
-        <span class="base64-section-label">Decode</span>
-        <div class="output-display-box">Encoded result…</div>
-        <div class="btn-row">
-          <button class="btn btn--dark" type="button">Decode</button>
-          <button class="btn-copy" type="button">Copy</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="block block--features">
-    <div class="feature-card">
-      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <rect x="4" y="4" width="32" height="32" stroke="currentColor" stroke-width="3"/>
-      </svg>
-      <span class="feature-label">Base64</span>
-    </div>
-    <div class="feature-card">
-      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="3"/>
-      </svg>
-      <span class="feature-label">URL Encode</span>
-    </div>
-    <div class="feature-card">
-      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <path d="M20 4v32M4 20h32" stroke="currentColor" stroke-width="3"/>
-      </svg>
-      <span class="feature-label">JSON Format</span>
-    </div>
-    <div class="feature-card">
-      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <path d="M6 32L20 8l14 24z" stroke="currentColor" stroke-width="3"/>
-      </svg>
-      <span class="feature-label">Hash</span>
-    </div>
-    <div class="feature-card">
-      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-        <rect x="6" y="6" width="28" height="28" stroke="currentColor" stroke-width="3"/>
-        <path d="M6 20h28M20 6v28" stroke="currentColor" stroke-width="3"/>
-      </svg>
-      <span class="feature-label">Escape</span>
-    </div>
-  </section>
-
-</div>
-
-</body>
-</html>
